@@ -6,6 +6,7 @@ import Intro from "./Intro";
 import Cluedo from "./Cluedo/Cluedo";
 import Clues from "./Clues/Clues";
 import { useSettings } from "./context/useSettings";
+import axios from "axios";
 
 export const CluesContext = React.createContext();
 
@@ -37,6 +38,24 @@ export const Main = () => {
   useEffect(() => {
     if (settings) {
       // De settings zijn geladen, haal hier de aanwijzingen op en bewaar ze in de state (setClues)
+      axios.get(
+        'https://htf-2021.calibrate.be/api/cluedo/clues', {
+          // Axios looks for the `auth` option, and, if it is set, formats a
+          // basic auth header for you automatically.
+          auth: {
+            username: 'NxT Ninjas',
+            password: 'hackthefuture'
+          }
+        }
+       
+        )
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
     }
   }, [settings]);
 
